@@ -205,6 +205,7 @@ private:
 
     // Sensors
     AP_GPS gps;
+    float gps_vz;
 
     // flight modes convenience array
     AP_Int8 *flight_modes = &g.flight_mode1;
@@ -1110,6 +1111,7 @@ private:
     void parachute_check();
     void parachute_release();
     bool parachute_manual_release();
+    void parachute_emergency_sink();
     void accel_cal_update(void);
 
     // support for AP_Avoidance custom flight mode, AVOID_ADSB

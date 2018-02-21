@@ -907,6 +907,7 @@ void Plane::update_alt()
         sink_rate = vel.z;
     } else if (gps.status() >= AP_GPS::GPS_OK_FIX_3D && gps.have_vertical_velocity()) {
         sink_rate = gps.velocity().z;
+        gps_vz = gps.velocity().z;
     } else {
         sink_rate = -barometer.get_climb_rate();        
     }
