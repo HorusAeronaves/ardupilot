@@ -2,7 +2,6 @@
 
 #include "Plane.h"
 
-#define MAX_SINK_RATE 3
 /* 
    call parachute library update
 */
@@ -10,7 +9,7 @@ void Plane::parachute_check()
 {
     parachute.update();
     
-    void parachute_emergency_sink();
+    parachute_emergency_sink();
 }
 
 /*
@@ -56,8 +55,8 @@ bool Plane::parachute_manual_release()
 
 void Plane::parachute_emergency_sink()
 {
-     // exit immediately if parachute is not enabled
-     if (!parachute.enabled() || parachute.released()) {
+     // exit immediately if parachute or auto mode is not enabled
+     if (!parachute.enabled() || !parachute.auto_enabled() || parachute.released()) {
          return;
      }
      
@@ -71,13 +70,16 @@ void Plane::parachute_emergency_sink()
          return;
      }
      
-     // do not release if taking off or landing
-     if (auto_state.takeoff_complete == false || mission.get_current_nav_cmd().id == MAV_CMD_NAV_LAND) {
+     // do not release if taking off 
+     if (auto_state.takeoff_complete == false ) {
          return;
     }
     
+    //gcs_send_text_fmt(MAV_SEVERITY_INFO, "gps_vz %.2f m/s", (double)gps_vz);
+    //gcs_send_text_fmt(MAV_SEVERITY_INFO, "max_sink %.2f m/s", (double)parachute.max_sink());
+    
     // if the sink rate gets above the limits, release the parachute
-    if (gps_vz > MAX_SINK_RATE)
+    if (gps_vz > parachute.max_sink())
     {
         gcs_send_text(MAV_SEVERITY_CRITICAL,"Parachute: Stall detected");
         parachute_release();

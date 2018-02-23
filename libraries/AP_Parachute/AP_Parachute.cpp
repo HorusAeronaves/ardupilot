@@ -61,6 +61,22 @@ const AP_Param::GroupInfo AP_Parachute::var_info[] = {
     // @User: Standard
     AP_GROUPINFO("DELAY_MS", 5, AP_Parachute, _delay_ms, AP_PARACHUTE_RELEASE_DELAY_MS),
     
+    // @Param: AUTO
+    // @DisplayName: Auto parachute enable
+    // @Description: Releases the parachute when maximum sink speed is reached
+    // @Values: 0:Disabled,1:Enabled
+    // @User: Standard
+    AP_GROUPINFO("AUTO", 6, AP_Parachute, _auto_enabled, AP_PARACHUTE_AUTO_DEFAULT),
+    
+    // @Param: MAX_SINK
+    // @DisplayName: Maximum sink speed in m/s
+    // @Description: Maximum sink speed to trigger auto parachute
+    // @Range: 0 15
+    // @Units: m/s
+    // @Increment: 1
+    // @User: Standard
+    AP_GROUPINFO("MAX_SINK", 7, AP_Parachute, _max_sink, AP_PARACHUTE_MAX_SINK_DEFAULT),
+    
     AP_GROUPEND
 };
 
