@@ -77,6 +77,15 @@ const AP_Param::GroupInfo AP_Parachute::var_info[] = {
     // @User: Standard
     AP_GROUPINFO("MAX_SINK", 7, AP_Parachute, _max_sink, AP_PARACHUTE_MAX_SINK_DEFAULT),
     
+    // @Param: MIN_BVOLT
+    // @DisplayName: Minimum battery voltage in volts
+    // @Description: Minimum battery voltage to trigger auto parachute
+    // @Range: 0 15
+    // @Units: V
+    // @Increment: 1
+    // @User: Standard
+    AP_GROUPINFO("MIN_BVOLT", 8, AP_Parachute, _min_batt_voltage, AP_PARACHUTE_MIN_BATT_VOLTAGE_DEFAULT),
+    
     AP_GROUPEND
 };
 

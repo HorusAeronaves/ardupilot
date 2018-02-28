@@ -24,6 +24,7 @@
 
 #define AP_PARACHUTE_AUTO_DEFAULT               1       // default value to auto parachute
 #define AP_PARACHUTE_MAX_SINK_DEFAULT           8.0     // default maximun sink speed in m/s to trigger auto parachute
+#define AP_PARACHUTE_MIN_BATT_VOLTAGE_DEFAULT   10.0    // default minimum battery voltage to trigger auto parachute
 
 /// @class	AP_Parachute
 /// @brief	Class managing the release of a parachute
@@ -64,8 +65,11 @@ public:
     /// auto_enabled - returns true if auto parachute is enabled
     bool auto_enabled() const { return _auto_enabled; }
     
-    /// max_sink - returns the configured maximum sink rate
+    /// max_sink - returns the configured maximum sink rate to trigger auto release
     float max_sink() const { return _max_sink; }
+    
+    /// min_batt_voltage - returns the configured minimum battery voltage to trigger auto release
+    float min_batt_voltage() const { return _min_batt_voltage; }
 
     /// alt_min - returns the min altitude above home the vehicle should have before parachute is released
     ///   0 = altitude check disabled
@@ -82,7 +86,8 @@ private:
     AP_Int16    _alt_min;       // min altitude the vehicle should have before parachute is released
     AP_Int16    _delay_ms;      // delay before chute release for motors to stop
     AP_Int8     _auto_enabled;  // 1 if auto parachute release is enabled
-    AP_Float    _max_sink; // maximun sink rate to trigger auto parachute
+    AP_Float    _max_sink;      // maximum sink rate to trigger auto parachute
+    AP_Float    _min_batt_voltage;  // miminum battery voltage to trigger auto parachute
 
     // internal variables
     AP_Relay   &_relay;         // pointer to relay object from the base class Relay.

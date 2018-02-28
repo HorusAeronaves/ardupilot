@@ -9,7 +9,7 @@ void Plane::parachute_check()
 {
     parachute.update();
     
-    parachute_emergency_sink();
+    parachute_emergency_check();
 }
 
 /*
@@ -53,7 +53,7 @@ bool Plane::parachute_manual_release()
     return true;
 }
 
-void Plane::parachute_emergency_sink()
+void Plane::parachute_emergency_check()
 {
      // exit immediately if parachute or auto mode is not enabled
      if (!parachute.enabled() || !parachute.auto_enabled() || parachute.released()) {
@@ -71,9 +71,15 @@ void Plane::parachute_emergency_sink()
     }
     
     // if the sink rate gets above the limits, release the parachute
-    if (auto_state.sink_rate > parachute.max_sink())
-    {
+    if (auto_state.sink_rate > parachute.max_sink()) {
         gcs_send_text(MAV_SEVERITY_CRITICAL,"Parachute: Stall detected");
         parachute_release();
     }
+    
+    else if (battery.voltage() < parachute.min_batt_voltage()) {
+        gcs_send_text(MAV_SEVERITY_CRITICAL,"Parachute: Extreme low battery voltage detected");
+        parachute_release();
+    }
+        
+
 }
