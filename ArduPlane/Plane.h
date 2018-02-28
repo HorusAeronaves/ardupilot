@@ -205,7 +205,6 @@ private:
 
     // Sensors
     AP_GPS gps;
-    float gps_vz;
 
     // flight modes convenience array
     AP_Int8 *flight_modes = &g.flight_mode1;

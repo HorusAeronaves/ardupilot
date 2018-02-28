@@ -60,11 +60,6 @@ void Plane::parachute_emergency_sink()
          return;
      }
      
-     // only automatically release in AUTO mode
-     if (control_mode != AUTO) {
-         return;
-     }
-     
      // do not release if vehicle is not flying
      if (!is_flying()) {
          return;
@@ -75,11 +70,8 @@ void Plane::parachute_emergency_sink()
          return;
     }
     
-    //gcs_send_text_fmt(MAV_SEVERITY_INFO, "gps_vz %.2f m/s", (double)gps_vz);
-    //gcs_send_text_fmt(MAV_SEVERITY_INFO, "max_sink %.2f m/s", (double)parachute.max_sink());
-    
     // if the sink rate gets above the limits, release the parachute
-    if (gps_vz > parachute.max_sink())
+    if (auto_state.sink_rate > parachute.max_sink())
     {
         gcs_send_text(MAV_SEVERITY_CRITICAL,"Parachute: Stall detected");
         parachute_release();

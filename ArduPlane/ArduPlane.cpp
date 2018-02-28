@@ -901,22 +901,13 @@ void Plane::update_alt()
     }
 
     // calculate the sink rate.
-    gps_vz = 0;
     float sink_rate;
-    bool sink_rate_has_value = false;
     Vector3f vel;
     if (ahrs.get_velocity_NED(vel)) {
         sink_rate = vel.z;
-        sink_rate_has_value = true;
-    }
-    if (gps.status() >= AP_GPS::GPS_OK_FIX_3D && gps.have_vertical_velocity()) {
-        if ( !sink_rate_has_value ) {
-            sink_rate = gps.velocity().z;
-            sink_rate_has_value = true;
-        }
-        gps_vz = gps.velocity().z;
-    }
-    if ( !sink_rate_has_value ){
+    } else if (gps.status() >= AP_GPS::GPS_OK_FIX_3D && gps.have_vertical_velocity()) {
+        sink_rate = gps.velocity().z;
+    } else {
         sink_rate = -barometer.get_climb_rate();        
     }
 
