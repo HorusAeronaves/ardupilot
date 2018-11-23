@@ -17,10 +17,11 @@ void Plane::parachute_check()
 */
 void Plane::parachute_release()
 {
+    /*
     if (parachute.released()) {
         return;
     }
-    
+    */
     // send message to gcs and dataflash
     gcs_send_text(MAV_SEVERITY_CRITICAL,"Parachute: Released");
 
@@ -36,7 +37,7 @@ void Plane::parachute_release()
 bool Plane::parachute_manual_release()
 {
     // exit immediately if parachute is not enabled
-    if (!parachute.enabled() || parachute.released()) {
+    if (!parachute.enabled()) {
         return false;
     }
 
